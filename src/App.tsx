@@ -39,6 +39,17 @@ function App() {
     await supabase.auth.signOut();
   };
 
+  const signInWithGoogle = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+    });
+    if (error) {
+      alert(error.message);
+    } else {
+      alert("Redirecting to Google for authentication...");
+    }
+  };
+
   return (
     <div style={{ padding: "2rem" }}>
       {session ? (
@@ -65,6 +76,8 @@ function App() {
           <br />
           <button onClick={signUp}>Sign Up</button>
           <button onClick={signIn}>Sign In</button>
+          <br />
+          <button onClick={signInWithGoogle}>Sign In with Google</button>
         </>
       )}
     </div>
