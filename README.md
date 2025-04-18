@@ -1,154 +1,115 @@
 
-# Simple Supabase Authentication with TypeScript
+# Simple Supabase Authentication with TypeScript (Email + Google OAuth)
 
-A simple yet complete implementation of authentication using **Supabase** and **TypeScript**. This repository demonstrates how to integrate user authentication with Supabase for a React application, covering both **sign up**, **sign in**, and **sign out** functionalities.
+A simple and clean implementation of authentication using **Supabase** and **TypeScript**, now enhanced with **Google OAuth login**. This project demonstrates how to integrate both email/password authentication and social login via Google in a React + TypeScript app.
 
-## Features
+## ✨ Features
 
-- **Email and Password Authentication** with Supabase.
-- **Session management** using Supabase's built-in session handling.
-- Responsive and simple UI with React.
-- TypeScript support for type safety.
-- Easy setup and integration with Supabase.
+- 🔐 Email and Password Authentication
+- 🔑 Google OAuth Authentication
+- 🧠 Session Management with Supabase
+- ⚛️ Built with React + TypeScript
+- 🎨 Simple and customizable UI
 
-## Technologies Used
+## 🛠 Technologies Used
 
-- **React** – Frontend library for building the user interface.
-- **TypeScript** – Typed JavaScript for better code quality and maintainability.
-- **Supabase** – Backend-as-a-Service platform for authentication and database management.
-- **CSS** – Styling for the user interface.
+- **React** – Frontend library for building user interfaces
+- **TypeScript** – Strongly-typed JavaScript
+- **Supabase** – Open-source Firebase alternative
+- **CSS** – For UI styling
 
-## Prerequisites
+## ⚙️ Prerequisites
 
-Before running the project, make sure you have the following installed:
+- [Node.js](https://nodejs.org/) (v14 or later)
+- npm or yarn
+- A [Supabase](https://supabase.io/) project
 
-- **Node.js** (v14.x or later)
-- **npm** or **yarn**
-- A **Supabase account** and project.
+## 🚀 Getting Started
 
-## Setup
-
-### 1. Clone the Repository
-
-Clone the repository to your local machine:
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/james-freitas/simple-supabase-auth-typescript.git
 cd simple-supabase-auth-typescript
 ```
 
-### 2. Install Dependencies
-
-Install the required dependencies:
+### 2. Install dependencies
 
 ```bash
 npm install
-```
-
-Or if you're using yarn:
-
-```bash
+# or
 yarn install
 ```
 
-### 3. Set Up Supabase
+### 3. Set up Supabase
 
-1. Go to the [Supabase dashboard](https://app.supabase.io/).
-2. Create a new project or use an existing one.
-3. Enable **Email and Password Authentication** in the Supabase project:
-   - Go to **Authentication** in the Supabase dashboard.
-   - Under **Settings**, ensure **Email login** is enabled.
+- Go to [Supabase](https://app.supabase.io/) and create a project.
+- Enable **Email and Password Auth** under Authentication > Providers.
+- Enable **Google Auth**:
+  - Under Authentication > Settings > External OAuth Providers, enable **Google**.
+  - Enter your **Google Client ID** and **Client Secret**.
+  - Set up a Google project at [Google Cloud Console](https://console.developers.google.com/).
+  - Use the following redirect URL:  
+    `https://<your-project>.supabase.co/auth/v1/callback`
 
-4. Get your **Supabase URL** and **API Key** from the Supabase project settings:
-   - Go to **Settings** -> **API**.
-   - Copy the `SUPABASE_URL` and `SUPABASE_ANON_KEY`.
+### 4. Configure Environment Variables
 
-### 4. Configure the Supabase Client
+Create a `.env` file in the root directory:
 
-Create a `.env` file in the root directory of the project and add your Supabase credentials:
-
-```bash
-REACT_APP_SUPABASE_URL=your-supabase-url
-REACT_APP_SUPABASE_ANON_KEY=your-supabase-anon-key
+```env
+REACT_APP_SUPABASE_URL=https://your-project.supabase.co
+REACT_APP_SUPABASE_ANON_KEY=your-anon-key
 ```
 
-### 5. Run the Project
-
-Now you can run the application locally:
+### 5. Start the development server
 
 ```bash
 npm start
-```
-
-Or using yarn:
-
-```bash
+# or
 yarn start
 ```
 
-The app should now be running on `http://localhost:3000`.
+Visit `http://localhost:3000` to see the app in action.
 
-## How It Works
+## 🧪 How It Works
 
-The application provides a simple form for users to sign up, sign in, and sign out using their email and password. Here's how the authentication process works:
+The app provides:
+- Email/password signup and login
+- Google login via Supabase OAuth
+- Logout button
+- Session tracking using React hooks (`useState`, `useEffect`)
 
-1. **Sign Up** – The user enters an email and password to register. Supabase sends a confirmation email to the user.
-2. **Sign In** – The user enters the email and password to authenticate. If successful, the user's session is established.
-3. **Sign Out** – The user can log out, which ends the session.
+```tsx
+await supabase.auth.signInWithOAuth({ provider: 'google' });
+```
 
-The session state is managed using React's `useState` and `useEffect` hooks. The app checks for an existing session on load, and updates the UI based on whether the user is logged in or not.
+Supabase redirects the user back to the app after successful authentication.
 
-## Folder Structure
-
-Here is the general folder structure of the project:
+## 📁 Project Structure
 
 ```
 /src
-  /components
-    App.tsx           # Main application component
-    LoginForm.tsx     # Login and Signup form component
-  /styles
-    styles.css        # Global styles for the app
-  /supabase
-    supabaseClient.ts # Supabase client configuration
-  index.tsx           # Entry point for the React app
-  App.css             # CSS file for styling the app
-  index.css           # Global styles file
-.env                  # Contains your Supabase credentials
+  App.tsx              # Main component with login UI and session logic
+  supabaseClient.ts    # Supabase initialization
+  index.tsx            # Entry point
+.env                   # Environment variables
 ```
 
-## UI Components
+## 💻 UI Overview
 
-- **App Component**: Handles the main logic for signing in, signing up, and signing out.
-- **LoginForm Component**: Displays input fields for the user to input their email and password, and handles the form submission.
+- **Authenticated Users**: Greeting + "Sign Out" button
+- **Unauthenticated Users**: Form with Email/Password, Sign Up, Sign In, and Google Login button
 
-## Customization
+## 🛡 License
 
-You can easily modify and extend the authentication system by:
+This project is open source and available under the [MIT License](LICENSE).
 
-- Adding **social logins** like Google or GitHub.
-- Implementing **password reset** functionality.
-- Integrating the app with a **backend** to store user data.
-- Styling the app to fit your branding.
+## 🙌 Acknowledgements
 
-## Contributing
+- [Supabase](https://supabase.io/)
+- [React](https://reactjs.org/)
+- [Google Developers Console](https://console.developers.google.com/)
 
-Contributions are welcome! If you have suggestions or improvements, feel free to create a pull request or open an issue.
+---
 
-### How to Contribute
-
-1. Fork the repository.
-2. Create a feature branch (`git checkout -b feature-branch`).
-3. Commit your changes (`git commit -am 'Add new feature'`).
-4. Push to your branch (`git push origin feature-branch`).
-5. Open a pull request.
-
-## License
-
-This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgements
-
-- **Supabase** – The open-source alternative to Firebase.
-- **React** – The frontend library used to build this application.
-- **TypeScript** – Adds type safety to JavaScript, improving development experience.
+> Made with ❤️ by [James Freitas](https://github.com/james-freitas)
